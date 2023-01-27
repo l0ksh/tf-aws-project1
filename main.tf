@@ -1,7 +1,7 @@
 provider "aws" {
   region     = "ap-south-1"
-  access_key = "AKIAUOHLAYWCWR6EO5XI"
-  secret_key = "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"
+  access_key = ""
+  secret_key = ""
 }
 
 # 1. Create VPC
@@ -125,11 +125,6 @@ resource "aws_eip" "one" {
 }
 
 # 9. Create Ubuntu server and install/enable apache2
-
-#resource "aws_key_pair" "main-key" {
-#  key_name   = "main-key"
-#  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7cHs20emg88x4MT3ea3Klm5eu0DhTxNfyQWwwYdfwVPk549iuY7C7C+OQrpbFVrSS6B/rGz0JWVYjk0M5OCykiIh7WJhY2YnQ+wcSF00Hc2EcujCDl7WWbUtR7BK/Ps/8DbVblZ1X5PYvQrdW61snTDpQ5ywgp8csqCh8m2k2hJwMHQC0Hk860EmDEotKzCAua8MLcNxwvXIKWOcBCsfftjQt9XotnJ47uFQfZ2jTCNcM/jLrYyBXM/RKJdGW8xg1qFGSa1eZaXKwfii9ynLIrWiLlXqUeezZ4Giiu2EV2SACFipyMDrPL3tau8gQbJESD+5Kr+fRosHdRq1sJ4dh0F5TXThG7EZCp/BfhrzwGGc8YN3olpTfDu980plPFOh99rUNx6Yq6rOs9D4TkL6hXnarvUcRr5iFvGW0Bn/KDjD3elXN5go/O1cRuJKwkGeMq0LgnYJDGFwHA2lOHa7T/7Au6y6DoBlAL3rtI1GTElhRbviYbYqZuO6aMrsraQM= l0ksh@pop-os"
-#}
 
 resource "aws_instance" "srv1" {
   ami               = "ami-06984ea821ac0a879"
