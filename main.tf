@@ -1,10 +1,18 @@
 provider "aws" {
   region     = "ap-south-1"
-  access_key = ""
-  secret_key = ""
+  access_key = "AKIAUOHLAYWCSY2TOCUJ"
+  secret_key = "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"
 }
 
 # 1. Create VPC
+
+# Defining variable
+
+variable "subnet_prefix" {
+    description = "cidr block for the subnet"
+#    default     = "10.0.1.0/24"             # default value
+#    type        = string                     # type can be set to force users to enter the mentioned type variables
+}
 
 resource "aws_vpc" "prod-vpc" {
   cidr_block = "10.0.0.0/16"
@@ -44,11 +52,23 @@ resource "aws_route_table" "prod-route-table" {
 
 resource "aws_subnet" "subnet-1" {
     vpc_id = aws_vpc.prod-vpc.id
-    cidr_block = "10.0.1.0/24"
+#    cidr_block = var.subnet_prefix[0]                 # passing variables as lists
+    cidr_block = var.subnet_prefix[0].cidr_block       # passing variables as lists
     availability_zone = "ap-south-1a"
 
     tags = {
-        Name = "prod-subnet"
+        Name = var.subnet_prefix[0].name
+    }
+}
+
+resource "aws_subnet" "subnet-2" {
+    vpc_id = aws_vpc.prod-vpc.id
+#    cidr_block = var.subnet_prefix[1]                 # passing variables as lists
+    cidr_block = var.subnet_prefix[1].cidr_block       # passing variables as lists
+    availability_zone = "ap-south-1a"
+
+    tags = {
+        Name = var.subnet_prefix[1].name
     }
 }
 
@@ -150,6 +170,15 @@ resource "aws_instance" "srv1" {
   }
 }
 
+# Print output for different properties of resources
+
+output "server_public_ip" {
+    value = aws_eip.one.public_ip
+}
+
+output "server_mac" {
+    value = aws_network_interface.web-server-nic.mac_address
+}
 
 # Note - Make to sure hard-code availability_zone for subnet and instances so that the resources
 # will be created on same zone. Also to avoid network issues.
